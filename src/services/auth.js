@@ -95,7 +95,7 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
   });
 };
 
-export const requestResetToken = async (email) => {
+export const sendResetToken = async (email) => {
   const user = await UsersCollection.findOne({ email });
   if (!user) {
     throw createHttpError(404, 'User not found');
@@ -123,7 +123,7 @@ export const requestResetToken = async (email) => {
   const template = handlebars.compile(templateSource);
   const html = template({
     name: user.name,
-    link: `${env('APP_DOMAIN')}/reset-password?token=${resetToken}`,
+    link: `${env('APP_DOMAIN')}/reset-pwd?token=${resetToken}`,
   });
 
   await sendEmail({
